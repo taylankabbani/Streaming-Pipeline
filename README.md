@@ -12,7 +12,6 @@ This section describes APIs created to stream data to our streaming system.
     * By default the delay is set to 1 sec
     * You can change it from the docker-compose file > streaming_api service > change the float in the `python src/app.py {your_input}` > you need to build again
 * Data will be streamed according to the time element of each json object.
-* 
 Two REST APIs will be implemented in a backend service:
 
 1. **Metrics API**: Will stream data from `metrics.json` folder in the data_source dir. Access it using: http://192.168.0.1:5000/stream_data_metrics
