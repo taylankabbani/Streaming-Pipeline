@@ -1,6 +1,8 @@
+import argparse
 import json
 import time
 import os
+import sys
 import logging
 from flask import Flask
 
@@ -91,7 +93,15 @@ class StreamingSource():
 
 
 if __name__ == "__main__":
+    cmd_input = argparse.ArgumentParser(
+        description="Streaming app")
+    delay_int = cmd_input.add_argument(
+        "delay", type=float, help="The delay in streaming data points")
+    args = cmd_input.parse_args()
+
     dir_path = os.path.join(os.path.dirname(
         os.path.dirname(__file__)), "data_source")
-    app = StreamingSource(delay=1, dir_path=dir_path)
+    assert args.delay != "None", "delay int must be integer"
+    print(f"-------------- Delay to: {args.delay} sec --------------")
+    app = StreamingSource(delay=args.delay, dir_path=dir_path)
     app.run()
