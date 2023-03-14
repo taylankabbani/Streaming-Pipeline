@@ -59,6 +59,13 @@ class KafkaAdmin:
         topic_ls = self.admin_client.list_topics()
         return topic_ls
 
+    def topic_exists(self, topic):
+        topic_list = self.get_all_topic_names()
+        if topic in topic_list:
+            return True
+        else:
+            return False
+
 
 if __name__ == "__main__":
     test = KafkaAdmin(bootstrap_servers="192.168.0.3:9092")

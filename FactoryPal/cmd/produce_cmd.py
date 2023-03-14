@@ -1,7 +1,16 @@
-from context import metrics_producer, workorder_producer
+from context import metrics_producer, workorder_producer, KafkaAdmin
 import threading
 
 BOOTSTRAP_SERVER = "192.168.0.3:9092"
+TOPICS_TO_REGISTER = ["metrics", "workorder"]
+
+# create admin instance
+admin = KafkaAdmin(bootstrap_servers=BOOTSTRAP_SERVER)
+
+# create kafka topics if dose not exits
+for topic in TOPICS_TO_REGISTER:
+    if not admin.topic_exists(topic):
+        admin.create_topic(topic)
 
 # create producers
 metric_producer = metrics_producer.MetricsProducer(
