@@ -47,3 +47,19 @@ An abstraction to create a producer to consume from APIs and write to kafka brok
         ```
     2. execute:
     ``` opt/bitnami/kafka/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic <topic_name> ```
+
+
+#### ConsumerSparkABC:
+An abstraction to create a spark application to consume data from kafka list of topics concurrently.
+
+* Spark Master IP: ``192.168.0.4``
+
+* ``1000 offsets`` is set as ``maxOffsetsPerTrigger`` per batch.
+
+To create new Spark consumer, you need to create a child class from ConsumerSparkABC by:
+
+1. Setting the names of kafka topics to consume.
+
+2. Setting the data schema of the topics.
+
+3. Setting the quey writer method, for example a ``consul`` or ``Parquet`` writer

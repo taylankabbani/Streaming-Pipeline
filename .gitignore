@@ -2,3 +2,5 @@ FactoryPal/venv/
 FactoryPal/client/__pycache__/
 FactoryPal/pipeline/producers/__pycache__/
 FactoryPal/cmd/__pycache__/
+FactoryPal/.vscode/
+FactoryPal/pipeline/consumers/__pycache__/

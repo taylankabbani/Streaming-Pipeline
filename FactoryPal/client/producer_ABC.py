@@ -13,7 +13,7 @@ _logger = logging.getLogger(__name__)
 _logger.setLevel(logging.INFO)
 
 class ProducerABC(ABC):
-    """ Abstract class for kafka API producer"""
+    """ Abstract class for kafka API producer """
 
     def __init__(self, bootstrap_server="192.168.0.3"):
         self.admin = KafkaAdmin(bootstrap_servers=bootstrap_server)
@@ -37,13 +37,16 @@ class ProducerABC(ABC):
     
     @abstractmethod
     def set_end_point(self):
+        """Abstract method to set the streaming API's IP"""
         return None
 
     @abstractmethod
     def set_topic_name(self):
+        """Abstract method to set the kafka topic to write to"""
         return None
 
     def set_partition_key(self):
+        """Abstract method to set the key for data partitioning"""
         return None
     
 
