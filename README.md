@@ -54,7 +54,19 @@ An abstraction to create a spark application to consume data from kafka list of 
 
 * Spark Master IP: ``192.168.0.4``
 
-* ``1000 offsets`` is set as ``maxOffsetsPerTrigger`` per batch.
+* maxOffsetsPerTrigger: ```1000 offsets`` per batch.
+
+* spark.executor.memory: ```512 m```
+
+* spark.executor.cores: ``1 core`` for each worker
+
+**Note** 
+
+You can increase memory and core of workers to increase performance.
+
+**Warning** 
+
+Set them in an appropriate way with you machine
 
 To create new Spark consumer, you need to create a child class from ConsumerSparkABC by:
 
@@ -62,4 +74,4 @@ To create new Spark consumer, you need to create a child class from ConsumerSpar
 
 2. Setting the data schema of the topics.
 
-3. Setting the quey writer method, for example a ``consul`` or ``Parquet`` writer
+3. Setting the quey writer method, for example a writer to``consul`` or to ``Parquet``.
