@@ -25,7 +25,6 @@ class ConsulConsumerSpark(ConsumerSparkABS):
         query = df.writeStream \
                 .outputMode("append") \
                 .option("maxRecordsPerFile", 10000) \
-                .trigger(processingTime=f'{self.sec} seconds') \
                 .format("console") \
                 .start()
         return query

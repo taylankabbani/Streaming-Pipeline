@@ -17,85 +17,87 @@ services:
     container_name: streaming_api
     ports:
       - '5000:5000'
-    command: "python src/app.py 0.1"
+    command: "python src/app.py 1"
     networks:
       factoryPal:
         ipv4_address: 192.168.0.1
-  # zookeeper:
-  #   image: 'bitnami/zookeeper:latest' 
-  #   container_name: zookeeper_container
-  #   ports:
-  #     - '2181:2181'
-  #   environment:
-  #     - ALLOW_ANONYMOUS_LOGIN=yes
-  #   networks:
-  #     factoryPal:
-  #       ipv4_address: 192.168.0.2
-  # kafka:
-  #   image: 'bitnami/kafka:latest'
-  #   container_name: kafka_container
-  #   ports:
-  #     - '9092:9092'
-  #   depends_on:
-  #     - zookeeper
-  #   #for env configs: https://hub.docker.com/r/bitnami/kafka
-  #   environment:
-  #     - KAFKA_ZOOKEEPER_CONNECT=192.168.0.2:2181
-  #     - ALLOW_PLAINTEXT_LISTENER=yes
-  #     - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092
-  #     - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://192.168.0.3:9092
-  #     - KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE=false
-  #   networks:
-  #     factoryPal:
-  #       ipv4_address: 192.168.0.3
-  # spark_master:
-  #   image: 'bitnami/spark:latest'
-  #   container_name: spark_master
-  #   hostname: spark_master
-  #   user: root
-  #   depends_on:
-  #     - kafka
-  #   environment:
-  #     - SPARK_MODE=master
-  #     - SPARK_MASTER_PORT=7077
-  #     - SPARK_WORKER_PORT=8881
-  #     - SPARK_WORKER_WEBUI_PORT=8081  
-  #   ports:
-  #     - "4040:4040"
-  #     - "8080:8080"
-  #   volumes:
-  #     - ./pipeline:/home/pipeline/
-  #     - ./database:/home/database
-  #   networks:
-  #     factoryPal:
-  #       ipv4_address: 192.168.0.4
-  # spark_worker_1:
-  #   image: bitnami/spark:latest
-  #   user: root
-  #   depends_on:
-  #     - spark_master
-  #   volumes:
-  #     - ./database:/home/database
-  #   environment:
-  #     - SPARK_MODE=worker
-  #     - SPARK_MASTER_URL=spark://192.168.0.4:7077
-  #     - SPARK_WORKER_CORES=1
-  #     - SPARK_WORKER_MEMORY=1g
-  #   networks:
-  #     factoryPal:
-  #       ipv4_address: 192.168.0.5
-  # spark_worker_2:
-  #   image: bitnami/spark:latest
-  #   user: root
-  #   depends_on:
-  #     - spark_master
-  #   volumes:
-  #     - ./database:/home/database
-  #   environment:
-  #     - SPARK_MODE=worker
-  #     - SPARK_MASTER_URL=spark://192.168.0.4:7077
-  #     - SPARK_WORKER_CORES=1
-  #     - SPARK_WORKER_MEMORY=1g
-  #   networks:
-  #     factoryPal:
-  #       ipv4_address: 192.168.0.6
+  zookeeper:
+    image: 'bitnami/zookeeper:latest' 
+    container_name: zookeeper_container
+    ports:
+      - '2181:2181'
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+    networks:
+      factoryPal:
+        ipv4_address: 192.168.0.2
+  kafka:
+    image: 'bitnami/kafka:latest'
+    container_name: kafka_container
+    ports:
+      - '9092:9092'
+    depends_on:
+      - zookeeper
+    #for env configs: https://hub.docker.com/r/bitnami/kafka
+    environment:
+      - KAFKA_ZOOKEEPER_CONNECT=192.168.0.2:2181
+      - ALLOW_PLAINTEXT_LISTENER=yes
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://192.168.0.3:9092
+      - KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE=false
+    networks:
+      factoryPal:
+        ipv4_address: 192.168.0.3
+  spark_master:
+    image: 'bitnami/spark:latest'
+    container_name: spark_master
+    hostname: spark_master
+    user: root
+    depends_on:
+      - kafka
+    environment:
+      - SPARK_MODE=master
+      - SPARK_MASTER_PORT=7077
+      - SPARK_WORKER_PORT=8881
+      - SPARK_WORKER_WEBUI_PORT=8081  
+    ports:
+      - "4040:4040"
+      - "8080:8080"
+    volumes:
+      - ./pipeline:/home/pipeline
+      - ./cmd:/home/cmd
+      - ./client:/home/client
+      - ./database:/home/database
+    networks:
+      factoryPal:
+        ipv4_address: 192.168.0.4
+  spark_worker_1:
+    image: bitnami/spark:latest
+    user: root
+    depends_on:
+      - spark_master
+    volumes:
+      - ./database:/home/database
+    environment:
+      - SPARK_MODE=worker
+      - SPARK_MASTER_URL=spark://192.168.0.4:7077
+      - SPARK_WORKER_CORES=1
+      - SPARK_WORKER_MEMORY=1g
+    networks:
+      factoryPal:
+        ipv4_address: 192.168.0.5
+  spark_worker_2:
+    image: bitnami/spark:latest
+    user: root
+    depends_on:
+      - spark_master
+    volumes:
+      - ./database:/home/database
+    environment:
+      - SPARK_MODE=worker
+      - SPARK_MASTER_URL=spark://192.168.0.4:7077
+      - SPARK_WORKER_CORES=1
+      - SPARK_WORKER_MEMORY=1g
+    networks:
+      factoryPal:
+        ipv4_address: 192.168.0.6

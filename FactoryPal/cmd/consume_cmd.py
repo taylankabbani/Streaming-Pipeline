@@ -2,8 +2,8 @@ from context import consul_consumer
 
 
 # Start the consul consumer
-SPARK_MASTER = "192.168.0.4"
-BOOTSTRAP_SERVER = "192.168.0.3"
+SPARK_MASTER = "spark://192.168.0.4:7077"
+BOOTSTRAP_SERVER = "192.168.0.3:9092"
 MEMORY = 512
 CORES = 1
 

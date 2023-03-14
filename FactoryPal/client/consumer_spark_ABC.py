@@ -24,6 +24,7 @@ class ConsumerSparkABS(ABC):
         self.bootstrap_server = bootstrap_server
         self.topics = self.set_topic_names()
         self.schemas = self.set_topic_schemas()
+        self.consume_every = 10
         # self.parquet_output_paths = parquet_output_paths
         
         # self.schemas = [self.set_schema() for _ in topics]
@@ -50,14 +51,14 @@ class ConsumerSparkABS(ABC):
         conf = SparkConf() \
             .setAppName("SparkConsumer") \
             .setMaster(spark_master) \
-            .set("spark.driver.host", spark_master) \
+            .set("spark.driver.host", "192.168.0.4") \
+            .set("spark.jars.packages", ",".join(packages)) \
             .set("spark.executor.memory", memory_str) \
             .set("spark.driver.memory",memory_str) \
             .set("spark.executor.cores", cores_str) \
             .set('spark.cores.max', cores_str)
-            
-        sc = SparkContext(conf=conf)
-        spark = SparkSession(sc)
+        
+        spark = SparkSession.builder.config(conf=conf).getOrCreate()
         _logger.info(f"------------ Successfully initiating Spark session!! LOL!! ------------")
         return spark
 
@@ -67,7 +68,7 @@ class ConsumerSparkABS(ABC):
         assert len(self.schemas) >0, "The List of data schemas is empty in the consumer"
         # will hold the the streams from different topics
         streams = []
-        for i, topic in enumerate (self.topic):
+        for i, topic in enumerate (self.topics):
             _logger.info(f"------------ Start Consuming from {topic} topic ------------")
             # Subscribe to a topic and created unbounded df
             df = self.spark.readStream \
@@ -75,7 +76,7 @@ class ConsumerSparkABS(ABC):
                 .option("kafka.bootstrap.servers", self.bootstrap_server) \
                 .option("subscribe", topic) \
                 .option("startingOffsets", "earliest") \
-                .option("maxOffsetsPerTrigger", 1000) \
+                .option("maxOffsetsPerTrigger", self.consume_every) \
                 .load() \
                 .selectExpr("CAST(key AS STRING)", "CAST(value AS STRING)") \
                 .select(from_json(col("value"), self.schemas[i]).alias("parseValue")) \
