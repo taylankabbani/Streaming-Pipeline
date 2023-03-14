@@ -2,7 +2,7 @@ from kafka.admin import KafkaAdminClient, NewTopic
 import logging
 
 # Creating a logger object
-logging.getLogger().addHandler(logging.StreamHandler())
+logging.basicConfig(format='%(asctime)s %(levelname)s:%(message)s', level=logging.INFO)
 _logger = logging.getLogger(__name__)
 _logger.setLevel(logging.INFO)
 
@@ -65,7 +65,7 @@ if __name__ == "__main__":
     print(test.get_all_topic_names())
     test.create_topic("metrics")
     test.create_topic("workorder")
-    print(test.get_all_topic_names())
-    test.delete_topic("metrics")
-    test.delete_topic("workorder")
+    # print(test.get_all_topic_names())
+    # test.delete_topic("metrics")
+    # test.delete_topic("workorder")
     print(test.get_all_topic_names())
