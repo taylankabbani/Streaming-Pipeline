@@ -1,6 +1,14 @@
 # FactoryPal Streaming Pipeline
 
 ## Architecture
+![Getting Started](./diagram.svg)
+
+
+## Requirements:
+
+1. Docker-compose
+2. Python 3
+3. Docker python client
 
 ## How to run
 
