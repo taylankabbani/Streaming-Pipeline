@@ -3,7 +3,47 @@
 ## Architecture
 
 ## How to run
-* You can access Spark UI from http://192.168.0.4:8080/ to monitor the spark jobs.
+
+1. Open a terminal in the dir where the docker-compose.yaml resides.
+
+2. Install and build images and containers:
+```
+sudo docker-compose up 
+```
+3. Check that all required containers are built correctly:
+```
+sudo docker ps
+```
+
+4. Initiate and kick off the streaming pipeline (Producers/consumers):
+```
+sudo python kickOff.py
+```
+
+After installing requirements, you should see the spark consumer running as following:
+```
+b'2023-03-15 07:37:25,465 INFO:------------ Successfully initiating Spark session!! LOL!! ------------\n'
+b'2023-03-15 07:37:25,466 INFO:------------ Start Consuming from metrics topic ------------\n'
+b'23/03/15 07:37:31 WARN ResolveWriteToStream: spark.sql.adaptive.enabled is not supported in streaming DataFrames/Datasets and will be disabled.\n'
+b'2023-03-15 07:37:31,331 INFO:------------ Start Consuming from workorder topic ------------\n'
+b'23/03/15 07:37:31 WARN ResolveWriteToStream: spark.sql.adaptive.enabled is not supported in streaming DataFrames/Datasets and will be disabled.\n'
+b'\r[Stage 0:>                                                          (0 + 1) / 3]\r'
+b'\r[Stage 0:>                  (0 + 1) / 3][Stage 1:>                  (0 + 0) / 2]\r'
+b'\r[Stage 0:======>            (1 + 1) / 3][Stage 1:>                  (0 + 0) / 2]\r'
+b'\r[Stage 0:============>      (2 + 1) / 3][Stage 1:>                  (0 + 0) / 2]\r'
+b'\r                                                                                \r'
+```
+
+> **Note** 
+> You can access Spark UI from http://192.168.0.4:8080/ to monitor the spark jobs.
+
+5. To run the ETL to get the product report, execute:
+```
+
+```
+
+
+
 
 ## Components
 ### APIs

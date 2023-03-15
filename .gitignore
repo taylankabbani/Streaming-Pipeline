@@ -4,3 +4,5 @@ FactoryPal/pipeline/producers/__pycache__/
 FactoryPal/cmd/__pycache__/
 FactoryPal/.vscode/
 FactoryPal/pipeline/consumers/__pycache__/
+FactoryPal/database/metrics/*
+FactoryPal/database/workorder/*

@@ -2,6 +2,8 @@
 
 import docker
 import time
+import os
+
 __author__ = "Taylan Kabbani"
 __date__ = "14/03/2023"
 
@@ -21,11 +23,6 @@ if __name__ == "__main__":
     exit_code, output = master.exec_run('pip install -r requirements.txt',
                              workdir="/home/pipeline/")
     print(output.decode('utf-8'))
-    if exit_code is not None:
-        print("------------- Failed to install requirements -------------")
-    else:
-        print("------------- Installed requirement successfully -------------")
-
     time.sleep(3)
     # Kick of producers
     master.exec_run('python produce_cmd.py &', workdir="/home/cmd/", detach=True)
@@ -34,6 +31,10 @@ if __name__ == "__main__":
     
     time.sleep(5)
     
-    # _, logs = master.exec_run('python consume_cmd.py', workdir="/home/cmd/", detach=False, stream=True)
+    _, logs = master.exec_run('python parquet_consume_cmd.py', workdir="/home/cmd/", detach=False, stream=True)
+    for log in logs:
+        print(log)
+    
+    # _, logs = master.exec_run('python consul_consume_cmd.py', workdir="/home/cmd/", detach=False, stream=True)
     # for log in logs:
     #     print(log)
