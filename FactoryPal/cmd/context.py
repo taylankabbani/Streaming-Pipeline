@@ -9,4 +9,4 @@ sys.path.insert(0, _dir)
 
 from client import *
 from pipeline.producers import metrics_producer, workorder_producer
-from pipeline.consumers import consul_consumer
+from pipeline.consumers import consul_consumer, parquet_consumer

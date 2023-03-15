@@ -17,7 +17,7 @@ services:
     container_name: streaming_api
     ports:
       - '5000:5000'
-    command: "python src/app.py 1"
+    command: "python src/app.py 0.1"
     networks:
       factoryPal:
         ipv4_address: 192.168.0.1

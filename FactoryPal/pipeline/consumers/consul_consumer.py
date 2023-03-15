@@ -21,10 +21,11 @@ class ConsulConsumerSpark(ConsumerSparkABS):
         # ])
         return [metrics_schema]
     
-    def query_writer(self,df):
+    def query_writer(self,df, topic, i):
         query = df.writeStream \
                 .outputMode("append") \
                 .option("maxRecordsPerFile", 10000) \
+                .trigger(processingTime='5 seconds') \
                 .format("console") \
                 .start()
         return query

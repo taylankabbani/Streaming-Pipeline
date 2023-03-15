@@ -1,7 +1,9 @@
 # FactoryPal Streaming Pipeline
 
 ## Architecture
+
 ## How to run
+* You can access Spark UI from http://192.168.0.4:8080/ to monitor the spark jobs.
 
 ## Components
 ### APIs
@@ -12,7 +14,7 @@ This section describes APIs created to stream data to our streaming system.
 * APIs will stream the data using only Json files as source.
 * The APIs will stream each data point (json object) with a time interval.
     
-    * By default the delay is set to 1 sec
+    * By default the delay is set to ``0.1 sec``
     * You can change it from the docker-compose file > streaming_api service > change the float in the `python src/app.py {your_input}` > you need to build again
 * Data will be streamed according to the time element of each json object.
 Two REST APIs will be implemented in a backend service:
@@ -21,8 +23,8 @@ Two REST APIs will be implemented in a backend service:
 
 2. ** workorder API**: Will stream data from `workorder.json` folder in the data_source dir. Will stream using endpoint. Access it using: http://192.168.0.1:5000/stream_data_workorder
 
-### Kafka
-This section describes the Kafak component in the Pipeline.
+### Pipeline
+This section describes the component in the Pipeline.
 
 #### KafkaAdmin:
 connects to the kafka cluster and performs different admin functions such as create, delete topics, also kafka config can be set such as partition number (`Default 3`) and replication factor (`Default 1`).
@@ -73,3 +75,6 @@ To create new Spark consumer, you need to create a child class from ConsumerSpar
 2. Setting the data schema of the topics.
 
 3. Setting the quey writer method, for example a writer to ``consul`` or to ``Parquet``.
+
+> **Note** 
+> The ``parquet_consumer`` used to persist the data from Kafka is set to write every ``10 sec``. You can increase/decrease it according to the API streaming interval. 

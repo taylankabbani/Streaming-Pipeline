@@ -24,7 +24,7 @@ class ConsumerSparkABS(ABC):
         self.bootstrap_server = bootstrap_server
         self.topics = self.set_topic_names()
         self.schemas = self.set_topic_schemas()
-        self.consume_every = 10
+        self.consume_every = 1000
         # self.parquet_output_paths = parquet_output_paths
         
         # self.schemas = [self.set_schema() for _ in topics]
@@ -41,7 +41,7 @@ class ConsumerSparkABS(ABC):
         """Abstract method to set Kafka topic names"""
         return []
     @abstractmethod
-    def query_writer(self, df):
+    def query_writer(self, df, topic,i):
         """Abstract method to set the query writer"""
         return None
     def _init_session(self, spark_master, memory, cores):
@@ -81,7 +81,7 @@ class ConsumerSparkABS(ABC):
                 .selectExpr("CAST(key AS STRING)", "CAST(value AS STRING)") \
                 .select(from_json(col("value"), self.schemas[i]).alias("parseValue")) \
                 .select("parseValue.*")
-            query = self.query_writer(df)
+            query = self.query_writer(df, topic, i)
             streams.append(query)
         
         for query in streams:
