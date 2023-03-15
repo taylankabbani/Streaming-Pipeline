@@ -6,18 +6,22 @@
 
 1. Open a terminal in the dir where the docker-compose.yaml resides.
 
+> **Warning**
+> Need to give root privileges:  
+```sudo su```
+
 2. Install and build images and containers:
 ```
-sudo docker-compose up 
+docker-compose up 
 ```
 3. Check that all required containers are built correctly:
 ```
-sudo docker ps
+docker ps
 ```
 
 4. Initiate and kick off the streaming pipeline (Producers/consumers):
 ```
-sudo python kickOff.py
+python kickOff.py
 ```
 
 After installing requirements, you should see the spark consumer running as following:
@@ -39,8 +43,12 @@ b'\r                                                                            
 
 5. To run the ETL to get the product report, execute:
 ```
-
+python run_ETL.py
 ```
+> **Warning**
+> You need to run it on new terminal
+
+6. Find the reports under ``ETL_out`` folder
 
 
 

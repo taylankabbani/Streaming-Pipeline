@@ -68,6 +68,7 @@ services:
       - ./cmd:/home/cmd
       - ./client:/home/client
       - ./database:/home/database
+      - ./ETL_out:/home/ETL_out
     networks:
       factoryPal:
         ipv4_address: 192.168.0.4
@@ -78,6 +79,7 @@ services:
       - spark_master
     volumes:
       - ./database:/home/database
+      - ./ETL_out:/home/ETL_out
     environment:
       - SPARK_MODE=worker
       - SPARK_MASTER_URL=spark://192.168.0.4:7077
@@ -93,6 +95,7 @@ services:
       - spark_master
     volumes:
       - ./database:/home/database
+      - ./ETL_out:/home/ETL_out
     environment:
       - SPARK_MODE=worker
       - SPARK_MASTER_URL=spark://192.168.0.4:7077
