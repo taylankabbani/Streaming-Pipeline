@@ -5,15 +5,11 @@ version: '3'
 networks:
     factoryPal:
         driver: bridge
+        internal: false
         ipam:
             driver: default
             config:
                 - subnet: "192.168.0.0/10"
-        driver_opts:
-          com.docker.network.bridge.enable_icc: "true"
-          com.docker.network.bridge.enable_ip_masquerade: "true"
-          com.docker.network.bridge.host_binding_ipv4: "0.0.0.0"
-          com.docker.network.driver.mtu: "1500"   
 
 services:
   # Data stream source
