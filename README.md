@@ -24,6 +24,11 @@ docker ps
 python kickOff.py
 ```
 
+> **Warning**
+> ``On Windows`` 
+> You might face a problem regarding connecting to the internet from docker containers which will cause the failure of installing the packages on the container.
+
+
 After installing requirements, you should see the spark consumer running as following:
 ```
 b'2023-03-15 07:37:25,465 INFO:------------ Successfully initiating Spark session!! LOL!! ------------\n'
