@@ -1,7 +1,7 @@
 # FactoryPal Streaming Pipeline
 
 ## Architecture
-![Getting Started](./diagram.svg)
+![Getting Started](./diagram.jpg)
 
 
 ## Requirements:
