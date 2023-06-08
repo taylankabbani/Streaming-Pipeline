@@ -1,4 +1,4 @@
-# FactoryPal Streaming Pipeline
+# Streaming Pipeline
 
 ## Architecture
 ![Getting Started](./diagram.jpg)
