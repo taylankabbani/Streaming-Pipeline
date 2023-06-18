@@ -54,7 +54,7 @@ b'\r                                                                            
 > **Note** 
 > You can access Spark UI from http://192.168.0.4:8080/ to monitor the spark jobs.
 
-5. To run the ETL to get the product report, execute:
+5. To run the ETL and get the product report, execute:
 ```
 python run_ETL.py
 ```
@@ -82,7 +82,7 @@ Two REST APIs will be implemented in a backend service:
 
 1. **Metrics API**: Will stream data from `metrics.json` folder in the data_source dir. Access it using: http://192.168.0.1:5000/stream_data_metrics
 
-2. ** workorder API**: Will stream data from `workorder.json` folder in the data_source dir. Will stream using endpoint. Access it using: http://192.168.0.1:5000/stream_data_workorder
+2. **Workorder API**: Will stream data from `workorder.json` folder in the data_source dir. Will stream using endpoint. Access it using: http://192.168.0.1:5000/stream_data_workorder
 
 ### Pipeline
 This section describes the component in the Pipeline.
@@ -91,7 +91,7 @@ This section describes the component in the Pipeline.
 connects to the kafka cluster and performs different admin functions such as create, delete topics, also kafka config can be set such as partition number (`Default 3`) and replication factor (`Default 1`).
 * Auto creation is disabled on the cluster so data will not be consumed by the broker unless a topic is created first. I set like this for security reasons obviously `:(`.
 * The Kafak cluster depends on Zookeeper running on `192.168.0.2:2181`
-* Kafka Bootstrap Server is on bootstrap server is on: `192.168.0.3:9092`
+* Kafka Bootstrap Server is on: `192.168.0.3:9092`
 
 #### ProducerABS:
 An abstraction to create a producer to consume from APIs and write to kafka broker(s). To create a new producer:
