@@ -1,8 +1,8 @@
-FactoryPal/venv/
-FactoryPal/client/__pycache__/
-FactoryPal/pipeline/producers/__pycache__/
-FactoryPal/cmd/__pycache__/
-FactoryPal/.vscode/
-FactoryPal/pipeline/consumers/__pycache__/
-FactoryPal/database/metrics/*
-FactoryPal/database/workorder/*
+streaming_pipeline/venv/
+streaming_pipeline/client/__pycache__/
+streaming_pipeline/pipeline/producers/__pycache__/
+streaming_pipeline/cmd/__pycache__/
+streaming_pipeline/.vscode/
+streaming_pipeline/pipeline/consumers/__pycache__/
+streaming_pipeline/database/metrics/*
+streaming_pipeline/database/workorder/*

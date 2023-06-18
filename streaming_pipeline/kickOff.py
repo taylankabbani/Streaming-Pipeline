@@ -1,4 +1,4 @@
-""""The main script to kick off the FactoryPal Data Pipeline"""
+""""The main script to kick off the streaming_pipeline Data Pipeline"""
 
 import docker
 import time
